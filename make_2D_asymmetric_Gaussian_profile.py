@@ -15,12 +15,17 @@ pyl.show()
 
 from scipy import signal
 
-def gkern_asym(kernlen=21, stdx=2, stdy=3):
+def gkern_asym(kernlen=10, peak=10, stdx=1, stdy=1.5):
     """Returns a 2D Gaussian kernel array."""
     gkernx = signal.gaussian(kernlen, std=stdx)
     gkerny = signal.gaussian(kernlen, std=stdy)
     gkern2d = np.outer(gkernx, gkerny)
-    return gkern2d
+    return peak*gkern2d
 
-pyl.imshow(gkern_asym())
+asym_gauss = gkern_asym()
+pyl.imshow(asym_gauss)
+pyl.show()
+
+all_sources=np.tile(asym_gauss,(409,409))
+pyl.imshow(all_sources)
 pyl.show()
