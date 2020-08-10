@@ -51,7 +51,6 @@ all_sources_expanded_to_image_size[edgex:edgex+all_sources.shape[0], edgey:edgey
 
 # This gives us random noise, normally distributed, as single precision floats with strong sources on a regular grid added to that.
 hdulist['PRIMARY'].data = np.float32(np.random.normal(size=dimensions))+all_sources_expanded_to_image_size
-scidata=hdulist['PRIMARY'].data
 # These should be exact copies of the source free maps!!!
 try: 
     hdulist.writeto(output_fits)
