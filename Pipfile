@@ -6,7 +6,7 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-tkp = "*"
+radio-pyse = "*"
 
 [requires]
-python_version = "2.7"
+python_version = "3.8"

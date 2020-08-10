@@ -80,7 +80,7 @@ while q<8:
         ystart=mapsize*p
         # y=ystart+edgeskip
         ra_true[8*q+p],dec_true[8*q+p]=pix_to_position(xstart+centrexstart,ystart+centreystart)
-        print 'ra_true[8*q+p],dec_true[8*q+p]=',ra_true[8*q+p],dec_true[8*q+p]
+        print('ra_true[8*q+p],dec_true[8*q+p]=',ra_true[8*q+p],dec_true[8*q+p])
         # ra_true[8*q+p]=ra
         # dec_true[8*q+p]=dec
         # sources[x-dx:x+dx,y-dy:y+dy]+=gaussians[0,:,:]*inserted_fluxes[i-1]
@@ -96,7 +96,7 @@ while q<9:
     p=0
     while p<9:
         ra_intermediate[9*q+p],dec_intermediate[9*q+p]=pix_to_position(mapsize*q,mapsize*p)
-        print 'ra_intermediate[9*q+p],dec_intermediate[9*q+p]=',ra_intermediate[9*q+p],dec_intermediate[9*q+p]
+        print('ra_intermediate[9*q+p],dec_intermediate[9*q+p]=',ra_intermediate[9*q+p],dec_intermediate[9*q+p])
         p+=1
     q+=1
         
@@ -127,9 +127,9 @@ def order_positions(ra_array,dec_array):
         q+=1
     return  ra_ordered,dec_ordered
 ra_test,dec_test=order_positions(ra_true,dec_true)
-print 'This is the result of the reordering of the true ra values,ra_true-ra_test:',ra_true-ra_test
-print 'This is the result of the reordering of the true dec values,dec_true-dec_test:',dec_true-dec_test
-answer=str(raw_input('Do you want to proceed?'))
+print('This is the result of the reordering of the true ra values,ra_true-ra_test:',ra_true-ra_test)
+print('This is the result of the reordering of the true dec values,dec_true-dec_test:',dec_true-dec_test)
+answer=str(input('Do you want to proceed?'))
 ra_true=ra_test
 dec_true=dec_test
 # Make a series of Gaussians with separations linearly increasing.
@@ -146,7 +146,7 @@ semiminor=0.5*56.1528/pixelsize
 # semimajor=semiminor
 
 minor_width=semiminor/math.sqrt(2.*math.log(2.))
-print 'minor_width=',minor_width
+print('minor_width=',minor_width)
 beginsep=2.0*minor_width
 endsep=7.0*minor_width
 
@@ -155,7 +155,7 @@ while j<=number_of_separation_steps:
     # I conveniently use sign(j) because sign(0)=0 and sign(1,2,3..)=1.
     centrex[j]=centrexstart+np.sign(j)*np.cos(theta)*(beginsep+float(j-1)*(endsep-beginsep)/float(number_of_separation_steps-1))
     centrey[j]=centreystart+np.sign(j)*np.sin(theta)*(beginsep+float(j-1)*(endsep-beginsep)/float(number_of_separation_steps-1))
-    print 'this is j and the separation:',j,np.sign(j)*(beginsep+float(j-1)*(endsep-beginsep)/float(number_of_separation_steps-1))
+    print('this is j and the separation:',j,np.sign(j)*(beginsep+float(j-1)*(endsep-beginsep)/float(number_of_separation_steps-1)))
     k=0
     while k<mapsize:
         x=float(k)
@@ -169,7 +169,7 @@ while j<=number_of_separation_steps:
 
 
 central_pos=nd.center_of_mass(gaussians[0,:,:])
-print 'central_pos=',central_pos[0],central_pos[1]
+print('central_pos=',central_pos[0],central_pos[1])
 # Start loop
 number_too_much_noise=0
 number_not_64=0
@@ -180,10 +180,10 @@ while i<=n_of_steps:
  dummyhigh=np.where(hdulist['PRIMARY'].data>lowest_flux,1,0)
  number_of_high_pixels[i-1]=np.sum(dummyhigh)
  if number_of_high_pixels[i-1]>0:
-     print 'there is at least one noise pixel higher than the lowest flux!!!!!!!!!!!!!!!!!!!'
+     print('there is at least one noise pixel higher than the lowest flux!!!!!!!!!!!!!!!!!!!')
      number_too_much_noise+=1
- print 'number too much noise=',number_too_much_noise
- print 'i=',i 
+ print('number too much noise=',number_too_much_noise)
+ print('i=',i) 
  
  sources=np.zeros((256,256),'d')
 
@@ -212,7 +212,7 @@ while i<=n_of_steps:
  sextract_results = my_image.sextract()
 
  if len(sextract_results)!=64:
-     print 'len(sextract_results)=',len(sextract_results)
+     print('len(sextract_results)=',len(sextract_results))
  else:
      # Only leap to the next image if there were exactly 64 detections.
      ra_values=np.zeros((64),'d')
@@ -232,9 +232,9 @@ while i<=n_of_steps:
      # print 'ra_true=',ra_true
      ra_diff[i-1,:]=ra_values-ra_true
      dec_diff[i-1,:]=dec_values-dec_true
-     print 'np.std(ra_diff[i-1,:]),np.std(dec_diff[i-1,:])=',np.std(ra_diff[i-1,:]),np.std(dec_diff[i-1,:])
+     print('np.std(ra_diff[i-1,:]),np.std(dec_diff[i-1,:])=',np.std(ra_diff[i-1,:]),np.std(dec_diff[i-1,:]))
  number_not_64+=len(sextract_results)
- print 'number_not_64,np.mod(number_not_64,64)=',number_not_64,np.mod(number_not_64,64)
+ print('number_not_64,np.mod(number_not_64,64)=',number_not_64,np.mod(number_not_64,64))
  i+=1
 
 np.save(outputpath+'inserted_fluxes',inserted_fluxes)

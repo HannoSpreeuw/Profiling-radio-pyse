@@ -14,8 +14,8 @@ number_of_sources = 167000
 
 hdulist=fits.open(input_fits)
 dimensions = (hdulist[0].header['NAXIS1'], hdulist[0].header['NAXIS2'])
-print
-print "The dimensions of this image are: ",dimensions
+print()
+print("The dimensions of this image are: ",dimensions)
 
 all_sources_expanded_to_image_size=np.zeros(dimensions,'d')
 
@@ -23,13 +23,13 @@ number_of_sources_along_equal_axes = int(math.ceil(np.sqrt(number_of_sources)))
 number_of_sources_along_xaxis = int(number_of_sources_along_equal_axes*dimensions[0]/dimensions[1])
 number_of_sources_along_yaxis = int(number_of_sources_along_equal_axes*dimensions[1]/dimensions[0])
 
-print
-print "number_of_sources_along_xaxis = ",number_of_sources_along_xaxis,"number_of_sources_along_yaxis = ",number_of_sources_along_yaxis
+print()
+print("number_of_sources_along_xaxis = ",number_of_sources_along_xaxis,"number_of_sources_along_yaxis = ",number_of_sources_along_yaxis)
 
 kernlenx = int(dimensions[0]/number_of_sources_along_xaxis)
 kernleny = int(dimensions[1]/number_of_sources_along_yaxis)
-print
-print "kernlenx = ",kernlenx,"  kernleny = ",kernleny
+print()
+print("kernlenx = ",kernlenx,"  kernleny = ",kernleny)
 
 # Here I try to make enough copies of a 2D asymmetrical Gaussian to cover the entire map, with peaks well above the noise
 def gkern_asym(kernlenx, kernleny, peak=10, stdx=1, stdy=1.5):
@@ -44,8 +44,8 @@ all_sources=np.tile(asym_gauss,(number_of_sources_along_xaxis, number_of_sources
 
 edgex = int((dimensions[0]-all_sources.shape[0])/2)
 edgey = int((dimensions[1]-all_sources.shape[1])/2)
-print
-print "edgex = ",edgex,"  edgey = ",edgey
+print()
+print("edgex = ",edgex,"  edgey = ",edgey)
 
 all_sources_expanded_to_image_size[edgex:edgex+all_sources.shape[0], edgey:edgey+all_sources.shape[1]] = all_sources
 
@@ -56,7 +56,7 @@ scidata=hdulist['PRIMARY'].data
 try: 
     hdulist.writeto(output_fits)
 except IOError:
-    print "Output file already exists, replacing"
+    print("Output file already exists, replacing")
     os.remove(output_fits)
     hdulist.writeto(output_fits)
 
