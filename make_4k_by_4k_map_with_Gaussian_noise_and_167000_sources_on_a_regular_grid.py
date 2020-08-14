@@ -32,7 +32,7 @@ print()
 print("kernlenx = ",kernlenx,"  kernleny = ",kernleny)
 
 # Here I try to make enough copies of a 2D asymmetrical Gaussian to cover the entire map, with peaks well above the noise
-def gkern_asym(kernlenx, kernleny, peak=10, stdx=1, stdy=1.5):
+def gkern_asym(kernlenx, kernleny, peak=100, stdx=1, stdy=1.5):
     """Returns a 2D Gaussian kernel array."""
     gkernx = signal.gaussian(kernlenx, std=stdx)
     gkerny = signal.gaussian(kernleny, std=stdy)
